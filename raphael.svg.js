@@ -893,6 +893,10 @@ window.Raphael.svg && function (R) {
             this.show();
             var hide = true;
         }
+        
+        displayParent = this.paper.canvas.parentNode.style.display;
+        this.paper.canvas.parentNode.style.display = "block";
+
         var bbox = {};
         try {
             bbox = this.node.getBBox();
@@ -902,8 +906,10 @@ window.Raphael.svg && function (R) {
             bbox = bbox || {};
         }
         hide && this.hide();
+        this.paper.canvas.parentNode.style.display = displayParent;
         return bbox;
     };
+    
     /*\
      * Element.attr
      [ method ]

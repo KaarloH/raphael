@@ -4334,6 +4334,7 @@ window.Raphael.svg && function (R) {
         el._.dirty = 1;
         var bb = el._getBBox(),
             dif = a.y - (bb.y + bb.height / 2);
+
         dif && R.is(dif, "finite") && $(tspans[0], {dy: dif});
     },
     Element = function (node, svg) {
@@ -4492,11 +4493,16 @@ window.Raphael.svg && function (R) {
         }
         this.removed = true;
     };
+
     elproto._getBBox = function () {
         if (this.node.style.display == "none") {
             this.show();
             var hide = true;
         }
+        
+        displayParent = this.paper.canvas.parentNode.style.display;
+        this.paper.canvas.parentNode.style.display = "block";
+
         var bbox = {};
         try {
             bbox = this.node.getBBox();
@@ -4506,6 +4512,7 @@ window.Raphael.svg && function (R) {
             bbox = bbox || {};
         }
         hide && this.hide();
+        this.paper.canvas.parentNode.style.display = displayParent;
         return bbox;
     };
     
